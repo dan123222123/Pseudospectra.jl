@@ -699,13 +699,14 @@ Contour levels are `log10(ϵ)` where `ϵ` is the inverse resolvent norm.
 This is a convenience wrapper for simple cases; see the Pseudospectra
 package documentation for more elaborate interfaces.
 """
-function spectralportrait(A0 :: AbstractMatrix; npts=100)
+function spectralportrait(A0 :: AbstractMatrix, A1::AbstractMatrix=Matrix(I,size(A0)); λref=nothing, npts=100)
     if _currentplotter[] == :undef
         setpsplotter()
     end
-    local ps_data
+    local ps_data, ps_data1
     try
         ps_data = new_matrix(A0)
+        ps_data1 = new_matrix(A1)
     catch JE
         @warn "The spectralportrait function only works for simple cases."
         rethrow(JE)
@@ -713,8 +714,8 @@ function spectralportrait(A0 :: AbstractMatrix; npts=100)
     n,m = size(ps_data.matrix)
     A = ps_data.matrix
     ps_dict = ps_data.ps_dict
-    B = get(ps_dict,:matrix2,I)
-    eigA = ps_dict[:ews]
+    B = get(ps_dict,:matrix2,A1)
+    eigA = isnothing(λref) ? ps_dict[:ews] : λref
     if isempty(eigA)
         @error """Unable to proceed without eigenvalues; for non-BLAS types
         import GenericLinearAlgebra and GenericSchur."""

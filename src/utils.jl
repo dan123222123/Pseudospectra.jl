@@ -173,7 +173,7 @@ dummyqdlg(query,details=""; options=["Yes","No"]) = 1
 compute reasonable axis limits for displaying a vector of points & environs
 """
 function vec2ax(dispvec)
-    ca = [minimum(real(dispvec)), maximum(real(dispvec)),
+    ca = Float64[minimum(real(dispvec)), maximum(real(dispvec)),
           minimum(imag(dispvec)), maximum(imag(dispvec))]
     if ca[1]==ca[2]
         ca[1] -= 0.5

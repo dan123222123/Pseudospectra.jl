@@ -84,7 +84,7 @@ a Schur decomposition) the solver is much more efficient than otherwise.
 
 [^Trefethen1999]: L.N.Trefethen, "Computation of pseudospectra," Acta Numerica 8, 247-295 (1999).
 """
-function psa_compute(Targ, npts::Int, ax::Vector, eigA::Vector, opts::Dict, S=I;
+function psa_compute(Targ, npts::Int, ax::Vector, eigA, opts::Dict, S=I;
                      psatol = 1e-5, thresholds=_default_thresholds,
                      proglog=nothing, logger=:default,
                      ctrlflag=nothing)
